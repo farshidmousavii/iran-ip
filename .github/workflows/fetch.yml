@@ -1,0 +1,29 @@
+name: Fetch Iran IPs
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - run: go run ./cmd/ -fetch-only
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ipv4.txt ipv6.txt ipv4.rsc ipv6.rsc
+          git diff --cached --quiet && echo "no changes" || git commit -m "update ipv4/ipv6 lists"
+          git push
