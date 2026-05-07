@@ -104,6 +104,32 @@ The server handles SIGINT/SIGTERM, finishes in-flight requests, and shuts down c
 /import ipv6.rsc
 ```
 
+Or fetch from your self-hosted server directly from RouterOS:
+
+```rsc
+:local fileName "IP.rsc"
+:local url "http://YOUR_SERVER:8080/ipv4.rsc"
+
+/tool fetch url=$url dst-path=$fileName mode=http
+
+:if ([:len [/file find name=$fileName]] = 0) do={
+    :log error "Fetch failed - file not found"
+    :return
+}
+
+:if ([/file get $fileName size] < 10) do={
+    :log error "File too small - abort"
+    /file remove $fileName
+    :return
+}
+
+:log info "Importing $fileName"
+/import file-name=$fileName
+:log info "Import done"
+
+/file remove $fileName
+```
+
 ### Project Structure
 
 ```
@@ -219,6 +245,32 @@ go run ./cmd/ -fetch-only
 ```
 /import ipv4.rsc
 /import ipv6.rsc
+```
+
+یا دریافت مستقیم از سرور اختصاصی خودتون از داخل RouterOS:
+
+```rsc
+:local fileName "IP.rsc"
+:local url "http://YOUR_SERVER:8080/ipv4.rsc"
+
+/tool fetch url=$url dst-path=$fileName mode=http
+
+:if ([:len [/file find name=$fileName]] = 0) do={
+    :log error "دریافت ناموفق - فایل پیدا نشد"
+    :return
+}
+
+:if ([/file get $fileName size] < 10) do={
+    :log error "فایل خیلی کوچیکه - لغو"
+    /file remove $fileName
+    :return
+}
+
+:log info "در حال導入 $fileName"
+/import file-name=$fileName
+:log info "تمام شد"
+
+/file remove $fileName
 ```
 
 ### ساختار پروژه
