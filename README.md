@@ -153,7 +153,7 @@ iran-ip/
 
 ### این پروژه چیه؟
 
-ابزاری که تمام ساب‌نت‌های IPv4 و IPv6 اعلام‌شده برای ایران (IR) رو از API ریپ (RIPE Stat) دریافت می‌کنه، ادغام و نرمال‌سازی می‌کنه و فایل‌های خروجی تولید می‌کنه:
+ابزاری که تمام ساب‌نت‌های IPv4 و IPv6 اعلام‌شده برای ایران (IR) رو از API رایپ (RIPE Stat) دریافت می‌کنه، ادغام و نرمال‌سازی می‌کنه و فایل‌های خروجی تولید می‌کنه:
 
 - **`ipv4.txt`** / **`ipv6.txt`** — لیست تمیز ساب‌نت‌های IPv4/IPv6
 - **`ipv4.rsc`** / **`ipv6.rsc`** — اسکریپت آماده برای MikroTik RouterOS
@@ -162,7 +162,7 @@ iran-ip/
 
 #### ۱. دانلود از گیت‌هاب
 
-GitHub Action هر ۶ ساعت لیست IP ها رو به‌روز می‌کنه. فقط کافیه فایل‌ها رو از ریپازیتوری دانلود کنید و توی شبکه‌تون استفاده کنید.
+در این پروژهGitHub Action  هر ۶ ساعت لیست IP ها رو به‌روز می‌کنه. فقط کافیه فایل‌ها رو از ریپازیتوری دانلود کنید و توی شبکه‌تون استفاده کنید.
 
 #### ۲. وب سرور اختصاصی
 
@@ -256,19 +256,19 @@ go run ./cmd/ -fetch-only
 /tool fetch url=$url dst-path=$fileName mode=http
 
 :if ([:len [/file find name=$fileName]] = 0) do={
-    :log error "دریافت ناموفق - فایل پیدا نشد"
+    :log error "Fetch failed - file not found"
     :return
 }
 
 :if ([/file get $fileName size] < 10) do={
-    :log error "فایل خیلی کوچیکه - لغو"
+    :log error "File too small - abort"
     /file remove $fileName
     :return
 }
 
-:log info "در حال導入 $fileName"
+:log info "Importing $fileName"
 /import file-name=$fileName
-:log info "تمام شد"
+:log info "Import done"
 
 /file remove $fileName
 ```
