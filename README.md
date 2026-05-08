@@ -124,22 +124,6 @@ go run ./cmd/ -fetch-only
 
 /file remove $fileName
 ```
-
-### ساختار پروژه
-
-```
-iran-ip/
-├── cmd/main.go                    # نقطه شروع
-├── internal/
-│   ├── ipfetcher/                 # دریافت ASN، ادغام CIDR، نوشتن فایل
-│   └── web/                       # سرور HTTP، بررسی سلامت، به‌روزرسانی خودکار
-├── .github/workflows/fetch.yml    # GitHub Action: دریافت خودکار هر ۶ ساعت
-├── Dockerfile                     # کاربر غیر-root، HEALTHCHECK
-├── docker-compose.yml             # Docker Compose
-├── data/                          # فایل‌های تولید شده (ipv4.txt, ipv6.txt, ...)
-├── go.mod
-```
-
 ---
 
 ## English
@@ -263,19 +247,4 @@ Or fetch from your self-hosted server directly from RouterOS:
 :log info "Import done"
 
 /file remove $fileName
-```
-
-### Project Structure
-
-```
-iran-ip/
-├── cmd/main.go                    # entry point
-├── internal/
-│   ├── ipfetcher/                 # ASN fetching, CIDR merging, file writing
-│   └── web/                       # HTTP server, health check, background refresh
-├── .github/workflows/fetch.yml    # GitHub Action: auto-fetch every 6 hours
-├── Dockerfile                     # non-root, HEALTHCHECK
-├── docker-compose.yml             # Docker Compose
-├── data/                          # generated files (ipv4.txt, ipv6.txt, ...)
-├── go.mod
 ```
