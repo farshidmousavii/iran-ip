@@ -1,4 +1,4 @@
-# iran-ip — Iran IPv4/IPv6 Address List Fetcher
+# iran-ip — Iran IPv4/IPv6 Prefix Lists & Fetcher
 
 **فارسی** | [English](#english)
 
@@ -8,227 +8,244 @@
 
 ### این پروژه چیه؟
 
-ابزاری که تمام ساب‌نت‌های IPv4 و IPv6 اعلام‌شده برای ایران (IR) رو از API رایپ (RIPE Stat) دریافت می‌کنه، ادغام و نرمال‌سازی می‌کنه و فایل‌های خروجی تولید می‌کنه:
+لیست به‌روز Prefixهای IPv4 و IPv6 مربوط به ایران بر اساس داده‌های RIPE Stat.
 
-- **`ipv4.txt`** / **`ipv6.txt`** — لیست تمیز ساب‌نت‌های IPv4/IPv6
-- **`ipv4.rsc`** / **`ipv6.rsc`** — اسکریپت آماده برای MikroTik RouterOS
+مناسب برای:
 
-### دو روش استفاده
+- MikroTik RouterOS
+- Firewall Rules
+- Routing Policy
+- Traffic Policy / Geo Routing
+- Automation Scripts
+- Self-hosted IP List Service
 
-#### ۱. دانلود از گیت‌هاب
+پروژه Prefixها را از RIPE Stat دریافت می‌کند، آن‌ها را merge و normalize می‌کند و خروجی‌های آماده استفاده تولید می‌کند.
 
-به وسیله GitHub Action هر ۶ ساعت لیست IP ها رو به‌روز می‌کنه. فقط کافیه فایل‌ها رو از ریپازیتوری دانلود کنید و توی شبکه‌تون استفاده کنید.
+> این پروژه صرفاً بر اساس داده‌های RIPE Stat کار می‌کند و دقت کامل Geolocation یا Routing را تضمین نمی‌کند.
 
-#### ۲. وب سرور اختصاصی
+---
 
-پروژه رو روی سرور خودتون اجرا کنید. در ابتدا IP ها رو دریافت می‌کنه و از طریق HTTP ارائه می‌ده. یک جاب در پس‌زمینه به صورت خودکار داده‌ها رو به‌روز می‌کنه. اگه اینترنت در دسترس نباشه، از فایل‌های کش روی دیسک استفاده می‌کنه.
+## دانلود مستقیم فایل‌ها
 
-### نصب
+### IPv4
 
-```bash
-git clone https://github.com/farshidmousavii/iran-ip.git
-cd iran-ip
-go run ./cmd/
-```
+- `ipv4.txt`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.txt`
 
-### داکر
+### IPv6
 
-```bash
-# ساخت و اجرا با Docker Compose (پیشنهادی)
-docker compose up -d
-# فایل‌های خروجی توی پوشه data/ در دسترس هستن
+- `ipv6.txt`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.txt`
 
-# یا با Docker مستقیم
-docker build -t iran-ip .
+### MikroTik RouterOS Scripts
 
-docker run -d --name iran-ip -p 8080:8080 -v $(pwd)/data:/app/data -w /app/data iran-ip
-```
+- `ipv4.rsc`
 
-کانتینر با کاربر غیر-root اجرا می‌شه و HEALTHCHECK داخلی داره. فایل‌های تولید شده (`ipv4.txt`, `ipv6.txt`, `ipv4.rsc`, `ipv6.rsc`) در پوشه `data/` در مسیر پروژه قابل دسترسی هستن.
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc`
 
-### پرچم‌ها (Flags)
+- `ipv6.rsc`
 
-| پرچم          | پیش‌فرض | توضیحات                                  |
-| ------------- | ------- | ---------------------------------------- |
-| `-addr`       | `:8080` | آدرس پورت وب سرور                        |
-| `-refresh`    | `6h`    | فاصله به‌روزرسانی خودکار (مثلاً `1h30m`) |
-| `-fetch-only` | `false` | فقط دریافت IP و ایجاد فایل، بدون وب سرور |
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.rsc`
 
-### نحوه اجرا
+---
+
+## Quick Start
+
+### دانلود مستقیم با curl
 
 ```bash
-# دریافت IP و اجرای وب سرور (حالت پیش‌فرض)
-go run ./cmd/
+a) IPv4
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.txt
 
-# آدرس پورت دلخواه
-go run ./cmd/ -addr :9090
-
-# به‌روزرسانی هر ۱ ساعت به جای ۶ ساعت
-go run ./cmd/ -refresh 1h
-
-# فقط دریافت IP (بدون وب سرور)
-go run ./cmd/ -fetch-only
+# IPv6
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.txt
 ```
 
-### آدرس‌های وب سرور
-
-| آدرس            | توضیحات                                                 |
-| --------------- | ------------------------------------------------------- |
-| `GET /health`   | بررسی سلامت سرور (JSON: status, last_fetch, last_error) |
-| `GET /ipv4.txt` | نمایش لیست IPv4 در مرورگر                               |
-| `GET /ipv6.txt` | نمایش لیست IPv6 در مرورگر                               |
-| `GET /ipv4.rsc` | دانلود فایل اسکریپت میکروتیک IPv4                       |
-| `GET /ipv6.rsc` | دانلود فایل اسکریپت میکروتیک IPv6                       |
-
-### بررسی سلامت
-
-اندپوینت `/health` اطلاعات سلامت سرور رو به صورت JSON برمی‌گردونه:
-
-- `{"status":"initializing"}` (503) — هنوز هیچ دریافتی انجام نشده
-- `{"status":"stale","last_fetch":"...","last_error":"..."}` (503) — آخرین دریافت با خطا مواجه شده
-- `{"status":"ok","last_fetch":"..."}` (200) — همه چیز خوبه
-
-### خاموش شدن امن
-
-سرور سیگنال‌های SIGINT/SIGTERM رو مدیریت می‌کنه و بعد از اتمام درخواست‌های در حال اجرا به صورت تمیز خاموش می‌شه.
-
-### وارد کردن در میکروتیک
-
-```
-/import ipv4.rsc
-/import ipv6.rsc
-```
-
-یا دریافت مستقیم از سرور اختصاصی خودتون از داخل RouterOS:
+### استفاده در MikroTik
 
 ```rsc
-:local fileName "IP.rsc"
-:local url "http://YOUR_SERVER:8080/ipv4.rsc"
-
-/tool fetch url=$url dst-path=$fileName mode=http
-
-:if ([:len [/file find name=$fileName]] = 0) do={
-    :log error "دریافت ناموفق - فایل پیدا نشد"
-    :return
-}
-
-:if ([/file get $fileName size] < 10) do={
-    :log error "فایل خیلی کوچیکه - لغو"
-    /file remove $fileName
-    :return
-}
-
-:log info "در حال導入 $fileName"
-/import file-name=$fileName
-:log info "تمام شد"
-
-/file remove $fileName
+/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc" dst-path="ipv4.rsc"
+/import ipv4.rsc
 ```
 
 ---
 
-## English
+## دو روش استفاده
 
-### What is this?
+### ۱. دانلود مستقیم از GitHub
 
-A tool that fetches all announced IPv4 and IPv6 subnets for Iran (IR) from RIPE Stat API, merges and normalizes them, and generates output files:
+به وسیله GitHub Actions هر ۶ ساعت فایل‌ها را به‌روزرسانی می‌شود.
 
-- **`ipv4.txt`** / **`ipv6.txt`** — clean lists of IPv4/IPv6 subnets (CIDR notation)
-- **`ipv4.rsc`** / **`ipv6.rsc`** — MikroTik RouterOS address-list scripts ready to import
+فقط فایل‌ها را دانلود کنید و در شبکه یا فایروال خود استفاده کنید.
 
-### Two usage modes
+### ۲. Self-hosted Web Server
 
-#### 1. Download from GitHub
+پروژه را روی سرور خود اجرا کنید.
 
-The GitHub Action automatically fetches and updates the IP lists every 6 hours. Just download the files from the repository and use them in your network.
+ویژگی‌ها:
 
-#### 2. Self-hosted web server
+- دریافت خودکار Prefixها در startup
+- ارائه فایل‌ها از طریق HTTP
+- به‌روزرسانی دوره‌ای در پس‌زمینه
+- استفاده از cache روی دیسک هنگام قطعی اینترنت
+- Health Check داخلی
+- Graceful Shutdown
+- اجرای non-root در Docker
 
-Run the project on your own server. It fetches IPs on startup and serves them via HTTP endpoints. A background job refreshes the data automatically. If internet is unavailable, it falls back to the cached files on disk.
+---
 
-### Installation
+## نصب
 
 ```bash
 git clone https://github.com/farshidmousavii/iran-ip.git
 cd iran-ip
+
 go run ./cmd/
 ```
 
-### Docker
+---
+
+## Docker
+
+### Docker Compose (پیشنهادی)
 
 ```bash
-# Build and run with Docker Compose (recommended)
 docker compose up -d
-# Generated files are available in the data/ directory
+```
 
-# Or with plain Docker
+فایل‌های تولید شده در پوشه `data/` در دسترس خواهند بود.
+
+### Docker Manual
+
+```bash
 docker build -t iran-ip .
 
-docker run -d --name iran-ip -p 8080:8080 -v $(pwd)/data:/app/data -w /app/data iran-ip
+docker run -d \
+  --name iran-ip \
+  -p 8080:8080 \
+  -v $(pwd)/data:/app/data \
+  -w /app/data \
+  iran-ip
 ```
 
-Container runs as non-root user with built-in health check. Generated files (`ipv4.txt`, `ipv6.txt`, `ipv4.rsc`, `ipv6.rsc`) are accessible from the `data/` directory on the host.
+کانتینر با کاربر non-root اجرا می‌شود و دارای HEALTHCHECK داخلی است.
 
-### Flags
+---
 
-| Flag          | Default | Description                                  |
-| ------------- | ------- | -------------------------------------------- |
-| `-addr`       | `:8080` | Web server listen address                    |
-| `-refresh`    | `6h`    | Auto-refresh interval (e.g., `1h30m`, `30m`) |
-| `-fetch-only` | `false` | Fetch IPs, write files, and exit             |
+## Flags
 
-### Usage
+| Flag          | Default | Description                           |
+| ------------- | ------- | ------------------------------------- |
+| `-addr`       | `:8080` | آدرس وب سرور                          |
+| `-refresh`    | `6h`    | فاصله به‌روزرسانی خودکار              |
+| `-fetch-only` | `false` | فقط دریافت فایل‌ها بدون اجرای وب سرور |
+
+---
+
+## نحوه اجرا
+
+### حالت پیش‌فرض
 
 ```bash
-# Fetch IPs and start web server (default)
 go run ./cmd/
+```
 
-# Custom listen address
+### پورت دلخواه
+
+```bash
 go run ./cmd/ -addr :9090
+```
 
-# Refresh every hour instead of 6 hours
+### به‌روزرسانی هر ۱ ساعت
+
+```bash
 go run ./cmd/ -refresh 1h
+```
 
-# Fetch-only mode (no web server)
+### فقط دریافت فایل‌ها
+
+```bash
 go run ./cmd/ -fetch-only
 ```
 
-### Web Endpoints
+---
 
-| Endpoint        | Description                                         |
-| --------------- | --------------------------------------------------- |
-| `GET /health`   | Health check (JSON: status, last_fetch, last_error) |
-| `GET /ipv4.txt` | View IPv4 list in browser                           |
-| `GET /ipv6.txt` | View IPv6 list in browser                           |
-| `GET /ipv4.rsc` | Download IPv4 MikroTik script                       |
-| `GET /ipv6.rsc` | Download IPv6 MikroTik script                       |
+## Web Endpoints
 
-All file endpoints include `Cache-Control: public, max-age=21600` headers.
+| Endpoint        | Description                  |
+| --------------- | ---------------------------- |
+| `GET /health`   | وضعیت سلامت سرویس            |
+| `GET /ipv4.txt` | نمایش لیست IPv4              |
+| `GET /ipv6.txt` | نمایش لیست IPv6              |
+| `GET /ipv4.rsc` | دانلود اسکریپت MikroTik IPv4 |
+| `GET /ipv6.rsc` | دانلود اسکریپت MikroTik IPv6 |
 
-### Health Check
+تمام endpointها دارای:
 
-The `/health` endpoint returns JSON with status:
-
-- `{"status":"initializing"}` (503) — no fetch completed yet
-- `{"status":"stale","last_fetch":"...","last_error":"..."}` (503) — last fetch failed
-- `{"status":"ok","last_fetch":"..."}` (200) — everything good
-
-### Graceful Shutdown
-
-The server handles SIGINT/SIGTERM, finishes in-flight requests, and shuts down cleanly.
-
-### MikroTik Import
-
+```text
+Cache-Control: public, max-age=21600
 ```
+
+هستند.
+
+---
+
+## Health Check
+
+اندپوینت `/health` خروجی JSON برمی‌گرداند:
+
+### در حال initialization
+
+```json
+{ "status": "initializing" }
+```
+
+HTTP Status:
+
+```text
+503
+```
+
+### خطا در آخرین دریافت
+
+```json
+{ "status": "stale", "last_fetch": "...", "last_error": "..." }
+```
+
+HTTP Status:
+
+```text
+503
+```
+
+### وضعیت سالم
+
+```json
+{ "status": "ok", "last_fetch": "..." }
+```
+
+HTTP Status:
+
+```text
+200
+```
+
+---
+
+## MikroTik Import
+
+### Import مستقیم
+
+```rsc
 /import ipv4.rsc
 /import ipv6.rsc
 ```
 
-Or fetch from your self-hosted server directly from RouterOS:
+### دریافت مستقیم از سرور یا GitHub
 
 ```rsc
 :local fileName "IP.rsc"
-:local url "http://YOUR_SERVER:8080/ipv4.rsc"
+:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc"
 
 /tool fetch url=$url dst-path=$fileName mode=http
 
@@ -249,3 +266,304 @@ Or fetch from your self-hosted server directly from RouterOS:
 
 /file remove $fileName
 ```
+
+---
+
+## Data Source
+
+Data is fetched from:
+
+- RIPE Stat API
+- Country Resource List (IR)
+
+Project source:
+
+- [https://stat.ripe.net/](https://stat.ripe.net/)
+
+---
+
+## License
+
+MIT
+
+---
+
+# English
+
+## What is this?
+
+Maintained IPv4 and IPv6 prefix lists for Iran based on RIPE Stat data.
+
+Useful for:
+
+- MikroTik RouterOS
+- Firewall Rules
+- Routing Policies
+- Traffic Engineering
+- Automation Scripts
+- Self-hosted IP List Services
+
+The project fetches announced IP prefixes for Iran from RIPE Stat, merges and normalizes them, and generates ready-to-use output files.
+
+> This project relies on RIPE Stat data and does not guarantee perfect geolocation or routing accuracy.
+
+---
+
+## Direct Downloads
+
+### IPv4
+
+- `ipv4.txt`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.txt`
+
+### IPv6
+
+- `ipv6.txt`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.txt`
+
+### MikroTik RouterOS Scripts
+
+- `ipv4.rsc`
+
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc`
+
+- `ipv6.rsc`
+
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.rsc`
+
+---
+
+## Quick Start
+
+### Download with curl
+
+```bash
+# IPv4
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.txt
+
+# IPv6
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv6.txt
+```
+
+### MikroTik Usage
+
+```rsc
+/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc" dst-path="ipv4.rsc"
+/import ipv4.rsc
+```
+
+---
+
+## Two Usage Modes
+
+### 1. Download from GitHub
+
+GitHub Actions automatically refreshes the files every 6 hours.
+
+Simply download the files and use them in your firewall, router, or automation setup.
+
+### 2. Self-hosted Web Server
+
+Run the project on your own server.
+
+Features:
+
+- Fetches prefixes on startup
+- Serves files via HTTP
+- Background auto-refresh
+- Disk cache fallback
+- Built-in health checks
+- Graceful shutdown
+- Non-root Docker runtime
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/farshidmousavii/iran-ip.git
+cd iran-ip
+
+go run ./cmd/
+```
+
+---
+
+## Docker
+
+### Docker Compose (recommended)
+
+```bash
+docker compose up -d
+```
+
+Generated files will be available in the `data/` directory.
+
+### Docker
+
+```bash
+docker build -t iran-ip .
+
+docker run -d \
+  --name iran-ip \
+  -p 8080:8080 \
+  -v $(pwd)/data:/app/data \
+  -w /app/data \
+  iran-ip
+```
+
+Container runs as non-root user and includes a built-in health check.
+
+---
+
+## Flags
+
+| Flag          | Default | Description               |
+| ------------- | ------- | ------------------------- |
+| `-addr`       | `:8080` | Web server listen address |
+| `-refresh`    | `6h`    | Auto-refresh interval     |
+| `-fetch-only` | `false` | Fetch files and exit      |
+
+---
+
+## Usage
+
+### Default Mode
+
+```bash
+go run ./cmd/
+```
+
+### Custom Listen Address
+
+```bash
+go run ./cmd/ -addr :9090
+```
+
+### Refresh Every Hour
+
+```bash
+go run ./cmd/ -refresh 1h
+```
+
+### Fetch-only Mode
+
+```bash
+go run ./cmd/ -fetch-only
+```
+
+---
+
+## Web Endpoints
+
+| Endpoint        | Description                   |
+| --------------- | ----------------------------- |
+| `GET /health`   | Service health endpoint       |
+| `GET /ipv4.txt` | View IPv4 list                |
+| `GET /ipv6.txt` | View IPv6 list                |
+| `GET /ipv4.rsc` | Download MikroTik IPv4 script |
+| `GET /ipv6.rsc` | Download MikroTik IPv6 script |
+
+All file endpoints include:
+
+```text
+Cache-Control: public, max-age=21600
+```
+
+---
+
+## Health Check
+
+The `/health` endpoint returns JSON:
+
+### Initializing
+
+```json
+{ "status": "initializing" }
+```
+
+HTTP Status:
+
+```text
+503
+```
+
+### Last Fetch Failed
+
+```json
+{ "status": "stale", "last_fetch": "...", "last_error": "..." }
+```
+
+HTTP Status:
+
+```text
+503
+```
+
+### Healthy
+
+```json
+{ "status": "ok", "last_fetch": "..." }
+```
+
+HTTP Status:
+
+```text
+200
+```
+
+---
+
+## MikroTik Import
+
+### Direct Import
+
+```rsc
+/import ipv4.rsc
+/import ipv6.rsc
+```
+
+### Fetch Directly from GitHub or Self-hosted Server
+
+```rsc
+:local fileName "IP.rsc"
+:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/ipv4.rsc"
+
+/tool fetch url=$url dst-path=$fileName mode=http
+
+:if ([:len [/file find name=$fileName]] = 0) do={
+    :log error "Fetch failed - file not found"
+    :return
+}
+
+:if ([/file get $fileName size] < 10) do={
+    :log error "File too small - abort"
+    /file remove $fileName
+    :return
+}
+
+:log info "Importing $fileName"
+/import file-name=$fileName
+:log info "Import done"
+
+/file remove $fileName
+```
+
+---
+
+## Data Source
+
+Data is fetched from:
+
+- RIPE Stat API
+- Country Resource List (IR)
+
+Project source:
+
+- [https://stat.ripe.net/](https://stat.ripe.net/)
+
+---
+
+## License
+
+MIT
