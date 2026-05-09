@@ -1,6 +1,6 @@
 # iran-ip — Iran IPv4/IPv6 Address List Fetcher
 
-[فارسی](#فارسی) | **English**
+**فارسی** | [English](#english)
 
 ---
 
@@ -17,7 +17,7 @@
 
 #### ۱. دانلود از گیت‌هاب
 
-GitHub Action هر ۶ ساعت لیست IP ها رو به‌روز می‌کنه. فقط کافیه فایل‌ها رو از ریپازیتوری دانلود کنید و توی شبکه‌تون استفاده کنید.
+به وسیله GitHub Action هر ۶ ساعت لیست IP ها رو به‌روز می‌کنه. فقط کافیه فایل‌ها رو از ریپازیتوری دانلود کنید و توی شبکه‌تون استفاده کنید.
 
 #### ۲. وب سرور اختصاصی
 
@@ -48,10 +48,10 @@ docker run -d --name iran-ip -p 8080:8080 -v $(pwd)/data:/app/data -w /app/data 
 
 ### پرچم‌ها (Flags)
 
-| پرچم | پیش‌فرض | توضیحات |
-|---|---|---|
-| `-addr` | `:8080` | آدرس پورت وب سرور |
-| `-refresh` | `6h` | فاصله به‌روزرسانی خودکار (مثلاً `1h30m`) |
+| پرچم          | پیش‌فرض | توضیحات                                  |
+| ------------- | ------- | ---------------------------------------- |
+| `-addr`       | `:8080` | آدرس پورت وب سرور                        |
+| `-refresh`    | `6h`    | فاصله به‌روزرسانی خودکار (مثلاً `1h30m`) |
 | `-fetch-only` | `false` | فقط دریافت IP و ایجاد فایل، بدون وب سرور |
 
 ### نحوه اجرا
@@ -72,13 +72,13 @@ go run ./cmd/ -fetch-only
 
 ### آدرس‌های وب سرور
 
-| آدرس | توضیحات |
-|---|---|
-| `GET /health` | بررسی سلامت سرور (JSON: status, last_fetch, last_error) |
-| `GET /ipv4.txt` | نمایش لیست IPv4 در مرورگر |
-| `GET /ipv6.txt` | نمایش لیست IPv6 در مرورگر |
-| `GET /ipv4.rsc` | دانلود فایل اسکریپت میکروتیک IPv4 |
-| `GET /ipv6.rsc` | دانلود فایل اسکریپت میکروتیک IPv6 |
+| آدرس            | توضیحات                                                 |
+| --------------- | ------------------------------------------------------- |
+| `GET /health`   | بررسی سلامت سرور (JSON: status, last_fetch, last_error) |
+| `GET /ipv4.txt` | نمایش لیست IPv4 در مرورگر                               |
+| `GET /ipv6.txt` | نمایش لیست IPv6 در مرورگر                               |
+| `GET /ipv4.rsc` | دانلود فایل اسکریپت میکروتیک IPv4                       |
+| `GET /ipv6.rsc` | دانلود فایل اسکریپت میکروتیک IPv6                       |
 
 ### بررسی سلامت
 
@@ -124,6 +124,7 @@ go run ./cmd/ -fetch-only
 
 /file remove $fileName
 ```
+
 ---
 
 ## English
@@ -170,11 +171,11 @@ Container runs as non-root user with built-in health check. Generated files (`ip
 
 ### Flags
 
-| Flag | Default | Description |
-|---|---|---|
-| `-addr` | `:8080` | Web server listen address |
-| `-refresh` | `6h` | Auto-refresh interval (e.g., `1h30m`, `30m`) |
-| `-fetch-only` | `false` | Fetch IPs, write files, and exit |
+| Flag          | Default | Description                                  |
+| ------------- | ------- | -------------------------------------------- |
+| `-addr`       | `:8080` | Web server listen address                    |
+| `-refresh`    | `6h`    | Auto-refresh interval (e.g., `1h30m`, `30m`) |
+| `-fetch-only` | `false` | Fetch IPs, write files, and exit             |
 
 ### Usage
 
@@ -194,13 +195,13 @@ go run ./cmd/ -fetch-only
 
 ### Web Endpoints
 
-| Endpoint | Description |
-|---|---|
-| `GET /health` | Health check (JSON: status, last_fetch, last_error) |
-| `GET /ipv4.txt` | View IPv4 list in browser |
-| `GET /ipv6.txt` | View IPv6 list in browser |
-| `GET /ipv4.rsc` | Download IPv4 MikroTik script |
-| `GET /ipv6.rsc` | Download IPv6 MikroTik script |
+| Endpoint        | Description                                         |
+| --------------- | --------------------------------------------------- |
+| `GET /health`   | Health check (JSON: status, last_fetch, last_error) |
+| `GET /ipv4.txt` | View IPv4 list in browser                           |
+| `GET /ipv6.txt` | View IPv6 list in browser                           |
+| `GET /ipv4.rsc` | Download IPv4 MikroTik script                       |
+| `GET /ipv6.rsc` | Download IPv6 MikroTik script                       |
 
 All file endpoints include `Cache-Control: public, max-age=21600` headers.
 
