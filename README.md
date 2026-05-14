@@ -8,23 +8,11 @@
 
 ### این پروژه چیه؟
 
-لیست به‌روز Prefixهای IPv4 و IPv6 مربوط به ایران بر اساس داده‌های RIPE Stat.
+ترافیک ایرانی را به‌طور خودکار از مسیر VPN یا پروکسی خارج کنید — با استفاده از لیست‌های به‌روز IPv4/IPv6 ایران.
 
-مناسب برای:
+مناسب برای سرورهای VPN، روترها، فایروال‌ها و سرورهای پروکسی.
 
-- Clash / Mihomo (proxy rule-provider)
-- Sing-box (rule-set)
-- Xray / v2fly (routing rules)
-- NFTables / ipset (Linux firewall)
-- OpenWRT (ipset script)
-- MikroTik RouterOS
-- Firewall Rules
-- Routing Policy
-- Traffic Policy / Geo Routing
-- Automation Scripts
-- Self-hosted IP List Service
-
-پروژه Prefixها را از RIPE Stat دریافت می‌کند، آن‌ها را merge و normalize می‌کند و خروجی‌های آماده استفاده تولید می‌کند.
+این پروژه هر ۶ ساعت Prefixهای اعلام شده ایران را از RIPE Stat دریافت، merge و normalize می‌کند و خروجی‌های آماده استفاده در قالب‌های مختلف تولید می‌کند.
 
 > این پروژه صرفاً بر اساس داده‌های RIPE Stat کار می‌کند و دقت کامل Geolocation یا Routing را تضمین نمی‌کند.
 
@@ -94,99 +82,19 @@ curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/di
 curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc
 ```
 
-### استفاده در نرم‌افزارهای proxy
+### راهنمای تنظیمات آماده
 
-**Clash / Mihomo** — فایل `iran.yaml` را به عنوان rule-provider تنظیم کنید:
+فایل‌های مثال آماده در پوشه `examples/` قرار دارند — هر کدام شامل تنظیمات کامل برای یک ابزار خاص:
 
-```yaml
-rule-providers:
-  iran:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml"
-    path: ./iran.yaml
-    interval: 86400
-
-rules:
-  - RULE-SET,iran,DIRECT
-  - MATCH,PROXY
-```
-
-**Sing-box** — فایل `iran.json` را به عنوان rule-set بارگذاری کنید:
-
-```json
-{
-  "route": {
-    "rule_set": [
-      {
-        "type": "remote",
-        "tag": "iran",
-        "format": "source",
-        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json"
-      }
-    ],
-    "rules": [
-      {
-        "rule_set": ["iran"],
-        "action": "route",
-        "outbound": "direct"
-      }
-    ]
-  }
-}
-```
-
-**Xray** — فایل `iran.json` را در routing rules استفاده کنید:
-
-```json
-{
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "ip": ["geoip:ir"],
-        "outboundTag": "direct"
-      }
-    ]
-  }
-}
-```
-
-### استفاده در Linux Firewall
-
-**ipset restore:**
-
-```bash
-ipset restore < iran.ipset
-```
-
-**nftables:**
-
-```nft
-include "/etc/firewall/iran.nft"
-
-chain prerouting {
-  type filter hook prerouting priority 0;
-  ip daddr @iran-v4 return
-  ip6 daddr @iran-v6 return
-}
-```
-
-### استفاده در OpenWRT
-
-```bash
-# کپی اسکریپت به روتر و اجرا
-scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip-ranges.sh
-ssh root@192.168.1.1 "sh /etc/iran-ip-ranges.sh"
-```
-
-### استفاده در MikroTik
-
-```rsc
-/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc" dst-path="ipv4.rsc"
-/import ipv4.rsc
-```
+| ابزار | مسیر مثال |
+|------|-----------|
+| Clash / Mihomo | [`examples/clash/config.yaml`](examples/clash/config.yaml) |
+| Sing-box | [`examples/sing-box/config.json`](examples/sing-box/config.json) |
+| Xray | [`examples/xray/config.json`](examples/xray/config.json) |
+| NFTables + ipset | [`examples/nftables/rules.nft`](examples/nftables/rules.nft) |
+| OpenWRT (firewall) | [`examples/openwrt/firewall-config.sh`](examples/openwrt/firewall-config.sh) |
+| MikroTik RouterOS | [`examples/mikrotik/import-script.rsc`](examples/mikrotik/import-script.rsc) |
+| Split Tunnel (iptables) | [`examples/split-tunnel.sh`](examples/split-tunnel.sh) |
 
 ---
 
@@ -358,43 +266,6 @@ HTTP Status:
 
 ---
 
-## MikroTik Import
-
-### Import مستقیم
-
-```rsc
-/import ipv4.rsc
-/import ipv6.rsc
-```
-
-### دریافت مستقیم از سرور یا GitHub
-
-```rsc
-:local fileName "IP.rsc"
-:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc"
-
-/tool fetch url=$url dst-path=$fileName mode=http
-
-:if ([:len [/file find name=$fileName]] = 0) do={
-    :log error "Fetch failed - file not found"
-    :return
-}
-
-:if ([/file get $fileName size] < 10) do={
-    :log error "File too small - abort"
-    /file remove $fileName
-    :return
-}
-
-:log info "Importing $fileName"
-/import file-name=$fileName
-:log info "Import done"
-
-/file remove $fileName
-```
-
----
-
 ## Data Source
 
 Data is fetched from:
@@ -418,23 +289,11 @@ MIT
 
 ## What is this?
 
-Maintained IPv4 and IPv6 prefix lists for Iran based on RIPE Stat data.
+Automatically route Iranian traffic outside your VPN or proxy using continuously updated Iran CIDR ranges.
 
-Useful for:
+Designed for VPN servers, routers, firewalls, and proxy servers.
 
-- Clash / Mihomo (proxy rule-provider)
-- Sing-box (rule-set)
-- Xray / v2fly (routing rules)
-- NFTables / ipset (Linux firewall)
-- OpenWRT (ipset script)
-- MikroTik RouterOS
-- Firewall Rules
-- Routing Policies
-- Traffic Engineering
-- Automation Scripts
-- Self-hosted IP List Services
-
-The project fetches announced IP prefixes for Iran from RIPE Stat, merges and normalizes them, and generates ready-to-use output files.
+This project fetches announced IP prefixes for Iran from RIPE Stat every 6 hours, merges and normalizes them, and generates ready-to-use output files in multiple formats.
 
 > This project relies on RIPE Stat data and does not guarantee perfect geolocation or routing accuracy.
 
@@ -522,99 +381,19 @@ curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/di
 curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc
 ```
 
-### Proxy Software Usage
+### Example Configurations
 
-**Clash / Mihomo** — use `iran.yaml` as a rule-provider:
+Ready-to-use example configs are available in the `examples/` directory:
 
-```yaml
-rule-providers:
-  iran:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml"
-    path: ./iran.yaml
-    interval: 86400
-
-rules:
-  - RULE-SET,iran,DIRECT
-  - MATCH,PROXY
-```
-
-**Sing-box** — load `iran.json` as a rule-set:
-
-```json
-{
-  "route": {
-    "rule_set": [
-      {
-        "type": "remote",
-        "tag": "iran",
-        "format": "source",
-        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json"
-      }
-    ],
-    "rules": [
-      {
-        "rule_set": ["iran"],
-        "action": "route",
-        "outbound": "direct"
-      }
-    ]
-  }
-}
-```
-
-**Xray** — use `iran.json` in routing rules:
-
-```json
-{
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "ip": ["geoip:ir"],
-        "outboundTag": "direct"
-      }
-    ]
-  }
-}
-```
-
-### Linux Firewall Usage
-
-**ipset restore:**
-
-```bash
-ipset restore < iran.ipset
-```
-
-**nftables:**
-
-```nft
-include "/etc/firewall/iran.nft"
-
-chain prerouting {
-  type filter hook prerouting priority 0;
-  ip daddr @iran-v4 return
-  ip6 daddr @iran-v6 return
-}
-```
-
-### OpenWRT Usage
-
-```bash
-# Copy script to router and run
-scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip-ranges.sh
-ssh root@192.168.1.1 "sh /etc/iran-ip-ranges.sh"
-```
-
-### MikroTik Usage
-
-```rsc
-/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc" dst-path="ipv4.rsc"
-/import ipv4.rsc
-```
+| Tool | Example Path |
+|------|-------------|
+| Clash / Mihomo | [`examples/clash/config.yaml`](examples/clash/config.yaml) |
+| Sing-box | [`examples/sing-box/config.json`](examples/sing-box/config.json) |
+| Xray | [`examples/xray/config.json`](examples/xray/config.json) |
+| NFTables + ipset | [`examples/nftables/rules.nft`](examples/nftables/rules.nft) |
+| OpenWRT (firewall) | [`examples/openwrt/firewall-config.sh`](examples/openwrt/firewall-config.sh) |
+| MikroTik RouterOS | [`examples/mikrotik/import-script.rsc`](examples/mikrotik/import-script.rsc) |
+| Split Tunnel (iptables) | [`examples/split-tunnel.sh`](examples/split-tunnel.sh) |
 
 ---
 
@@ -780,43 +559,6 @@ HTTP Status:
 
 ```text
 200
-```
-
----
-
-## MikroTik Import
-
-### Direct Import
-
-```rsc
-/import ipv4.rsc
-/import ipv6.rsc
-```
-
-### Fetch Directly from GitHub or Self-hosted Server
-
-```rsc
-:local fileName "IP.rsc"
-:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc"
-
-/tool fetch url=$url dst-path=$fileName mode=http
-
-:if ([:len [/file find name=$fileName]] = 0) do={
-    :log error "Fetch failed - file not found"
-    :return
-}
-
-:if ([/file get $fileName size] < 10) do={
-    :log error "File too small - abort"
-    /file remove $fileName
-    :return
-}
-
-:log info "Importing $fileName"
-/import file-name=$fileName
-:log info "Import done"
-
-/file remove $fileName
 ```
 
 ---
