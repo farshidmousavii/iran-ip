@@ -8,7 +8,7 @@
 
 ### این پروژه چیه؟
 
-ترافیک ایرانی را به‌طور خودکار از مسیر VPN یا پروکسی خارج کنید — با استفاده از لیست‌های به‌روز IPv4/IPv6 ایران.
+ترافیک ایرانی را به‌طور خودکار از مسیر VPN یا پروکسی یا روتر  با استفاده از لیست‌های به‌روز IPv4/IPv6 ایران خارج کنید .
 
 مناسب برای سرورهای VPN، روترها، فایروال‌ها و سرورهای پروکسی.
 
@@ -31,6 +31,8 @@
 - **OpenWRT:** `dist/openwrt/iran.sh`
 - **MikroTik RouterOS:** `dist/routeros/ipv4.rsc`, `dist/routeros/ipv6.rsc`
 
+> فایل‌ها هر روز به‌صورت خودکار در **GitHub Releases** منتشر می‌شوند. می‌توانید همه فایل‌ها را به صورت یکجا از [آخرین Release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) دانلود کنید.
+
 ### لینک‌های دانلود مستقیم
 
 | فایل | لینک |
@@ -45,6 +47,7 @@
 | `firewall/iran.ipset` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset) |
 | `firewall/iran.nft` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft) |
 | `openwrt/iran.sh` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh) |
+| همه فایل‌ها (zip) | [دانلود آخرین Release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) |
 
 ---
 
@@ -102,11 +105,13 @@ curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/di
 
 ### ۱. دانلود مستقیم از GitHub
 
-به وسیله GitHub Actions هر ۶ ساعت فایل‌ها را به‌روزرسانی می‌شود.
+به وسیله GitHub Actions هر ۶ ساعت فایل‌ها به‌روزرسانی می‌شوند.
 
-فقط فایل‌ها را دانلود کنید و در شبکه یا فایروال خود استفاده کنید.
+**دو روش دانلود:**
+- **فایل‌های تکی** — هر فایل به‌صورت جداگانه از پوشه `dist/` در دسترس است
+- **بسته کامل (zip)** — همه فایل‌ها به‌صورت یکجا در [GitHub Releases](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) هر روز منتشر می‌شوند
 
-### ۲. Self-hosted Web Server
+### ۲. روش Self-hosted Web Server
 
 پروژه را روی سرور خود اجرا کنید.
 
@@ -116,8 +121,8 @@ curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/di
 - ارائه فایل‌ها از طریق HTTP
 - به‌روزرسانی دوره‌ای در پس‌زمینه
 - استفاده از cache روی دیسک هنگام قطعی اینترنت
-- Health Check داخلی
-- Graceful Shutdown
+- استفاده از Health Check داخلی
+- دارای Graceful Shutdown
 - اجرای non-root در Docker
 
 ---
@@ -266,20 +271,16 @@ HTTP Status:
 
 ---
 
-## Data Source
+## منبع داده ها
 
-Data is fetched from:
+داده ها از منابع زیر دریافت میگردند :
 
 - RIPE Stat API
 - Country Resource List (IR)
 
-Project source:
-
-- [https://stat.ripe.net/](https://stat.ripe.net/)
-
 ---
 
-## License
+## مجوز
 
 MIT
 
@@ -301,48 +302,44 @@ This project fetches announced IP prefixes for Iran from RIPE Stat every 6 hours
 
 ## Direct Downloads
 
+All output files are available under the `dist/` directory.
+
+> Daily **GitHub Releases** are also published — download everything as a single archive from the [latest release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest).
+
 ### Clash / Mihomo
 
 - `clash/iran.yaml`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml`
 
 ### Sing-box
 
 - `sing-box/iran.json`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json`
 
 ### Xray
 
 - `xray/iran.json`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/xray/iran.json`
 
 ### NFTables
 
 - `firewall/iran.ipset`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset`
 
 - `firewall/iran.nft`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft`
 
 ### OpenWRT
 
 - `openwrt/iran.sh`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh`
 
 ### MikroTik RouterOS
 
 - `routeros/ipv4.rsc`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc`
 
 - `routeros/ipv6.rsc`
-
 - `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc`
 
 ---
@@ -403,7 +400,9 @@ Ready-to-use example configs are available in the `examples/` directory:
 
 GitHub Actions automatically refreshes the files every 6 hours.
 
-Simply download the files and use them in your firewall, router, or automation setup.
+**Two download options:**
+- **Individual files** — each file available directly from the `dist/` folder
+- **Full archive (zip)** — all files bundled in daily [GitHub Releases](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest)
 
 ### 2. Self-hosted Web Server
 
@@ -569,10 +568,6 @@ Data is fetched from:
 
 - RIPE Stat API
 - Country Resource List (IR)
-
-Project source:
-
-- [https://stat.ripe.net/](https://stat.ripe.net/)
 
 ---
 
