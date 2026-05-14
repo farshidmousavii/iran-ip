@@ -31,7 +31,8 @@
 - **OpenWRT:** `dist/openwrt/iran.sh`
 - **MikroTik RouterOS:** `dist/routeros/ipv4.rsc`, `dist/routeros/ipv6.rsc`
 
-> فایل‌ها هر روز به‌صورت خودکار در **GitHub Releases** منتشر می‌شوند. می‌توانید همه فایل‌ها را به صورت یکجا از [آخرین Release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) دانلود کنید.
+> بسته کامل همه فایل‌ها به‌صورت روزانه در **GitHub Releases** منتشر می‌شود.
+> [دانلود آخرین Release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest)
 
 ### لینک‌های دانلود مستقیم
 
@@ -47,7 +48,8 @@
 | `firewall/iran.ipset` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset) |
 | `firewall/iran.nft` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft) |
 | `openwrt/iran.sh` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh) |
-| همه فایل‌ها (zip) | [دانلود آخرین Release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) |
+| `checksums.txt` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/checksums.txt) |
+| `iran-ip-ranges.zip` | [دانلود از Releases](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest) |
 
 ---
 
@@ -304,7 +306,8 @@ This project fetches announced IP prefixes for Iran from RIPE Stat every 6 hours
 
 All output files are available under the `dist/` directory.
 
-> Daily **GitHub Releases** are also published — download everything as a single archive from the [latest release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest).
+> A complete archive of all files is published daily as **GitHub Releases**.
+> [Download latest release](https://github.com/farshidmousavii/iran-ip-ranges/releases/latest).
 
 ### Clash / Mihomo
 
