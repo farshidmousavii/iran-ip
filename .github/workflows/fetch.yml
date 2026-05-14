@@ -24,6 +24,34 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ipv4.txt ipv6.txt ipv4.rsc ipv6.rsc
-          git diff --cached --quiet && echo "no changes" || git commit -m "update ipv4/ipv6 lists"
+          git add dist/
+          git diff --cached --quiet && echo "no changes" || git commit -m "update ip lists (all formats)"
           git push
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: daily-${{ steps.date.outputs.date }}
+          name: "Daily Update ${{ steps.date.outputs.date }}"
+          body: |
+            ## Iran IP Lists — Daily Update
+
+            Automatic refresh of all Iran IP subnet formats.
+
+            ### Formats included
+            - **Plain text:** dist/raw/ipv4.txt, dist/raw/ipv6.txt
+            - **MikroTik RouterOS:** dist/mikrotik/ipv4.rsc, dist/mikrotik/ipv6.rsc
+            - **Clash / Mihomo:** dist/clash/iran.yaml
+            - **Sing-box:** dist/singbox/iran.json
+            - **Xray:** dist/xray/iran.json
+            - **NFTables ipset:** dist/nftables/iran.ipset
+            - **NFTables config:** dist/nftables/iran.nft
+            - **OpenWRT:** dist/openwrt/iran.sh
+          artifacts: "dist/**"
+          allowUpdates: true
+          artifactErrorsFailBuild: false
+          omitBodyDuringUpdate: true
+          token: ${{ secrets.GITHUB_TOKEN }}

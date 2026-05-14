@@ -25,10 +25,16 @@ func New(dir string, refreshTick time.Duration, addr string) *Server {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", s.handleHealth)
-	mux.HandleFunc("/ipv4.txt", s.serveFile("ipv4.txt", "text/plain; charset=utf-8", false))
-	mux.HandleFunc("/ipv6.txt", s.serveFile("ipv6.txt", "text/plain; charset=utf-8", false))
-	mux.HandleFunc("/ipv4.rsc", s.serveFile("ipv4.rsc", "text/plain; charset=utf-8", true))
-	mux.HandleFunc("/ipv6.rsc", s.serveFile("ipv6.rsc", "text/plain; charset=utf-8", true))
+	mux.HandleFunc("/ipv4.txt", s.serveFile("dist/raw/ipv4.txt", "text/plain; charset=utf-8", false))
+	mux.HandleFunc("/ipv6.txt", s.serveFile("dist/raw/ipv6.txt", "text/plain; charset=utf-8", false))
+	mux.HandleFunc("/ipv4.rsc", s.serveFile("dist/mikrotik/ipv4.rsc", "text/plain; charset=utf-8", true))
+	mux.HandleFunc("/ipv6.rsc", s.serveFile("dist/mikrotik/ipv6.rsc", "text/plain; charset=utf-8", true))
+	mux.HandleFunc("/clash/iran.yaml", s.serveFile("dist/clash/iran.yaml", "text/yaml; charset=utf-8", false))
+	mux.HandleFunc("/singbox/iran.json", s.serveFile("dist/singbox/iran.json", "application/json; charset=utf-8", false))
+	mux.HandleFunc("/xray/iran.json", s.serveFile("dist/xray/iran.json", "application/json; charset=utf-8", false))
+	mux.HandleFunc("/nftables/iran.ipset", s.serveFile("dist/nftables/iran.ipset", "text/plain; charset=utf-8", true))
+	mux.HandleFunc("/nftables/iran.nft", s.serveFile("dist/nftables/iran.nft", "text/plain; charset=utf-8", true))
+	mux.HandleFunc("/openwrt/iran.sh", s.serveFile("dist/openwrt/iran.sh", "text/plain; charset=utf-8", true))
 
 	s.srv = &http.Server{
 		Addr:    addr,
@@ -43,11 +49,17 @@ func (s *Server) Start() error {
 
 	log.Printf("web server started on %s", s.srv.Addr)
 	log.Printf("endpoints:")
-	log.Printf("  GET http://localhost%s/health     (health check)", s.srv.Addr)
-	log.Printf("  GET http://localhost%s/ipv4.txt  (view in browser)", s.srv.Addr)
-	log.Printf("  GET http://localhost%s/ipv6.txt  (view in browser)", s.srv.Addr)
-	log.Printf("  GET http://localhost%s/ipv4.rsc  (download)", s.srv.Addr)
-	log.Printf("  GET http://localhost%s/ipv6.rsc  (download)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/health              (health check)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/ipv4.txt           (plain text IPv4)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/ipv6.txt           (plain text IPv6)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/ipv4.rsc           (MikroTik IPv4)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/ipv6.rsc           (MikroTik IPv6)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/clash/iran.yaml    (Clash/Mihomo)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/singbox/iran.json  (Sing-box)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/xray/iran.json     (Xray)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/nftables/iran.ipset (ipset restore)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/nftables/iran.nft  (nftables config)", s.srv.Addr)
+	log.Printf("  GET http://localhost%s/openwrt/iran.sh    (OpenWRT script)", s.srv.Addr)
 	log.Printf("auto-refresh interval: %s", s.refreshTick)
 
 	return s.srv.ListenAndServe()

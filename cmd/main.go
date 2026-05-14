@@ -35,7 +35,7 @@ func main() {
 		if err := fetchAndWrite(dir); err != nil {
 			log.Fatalf("fetch failed: %v", err)
 		}
-		log.Println("done: ipv4.txt, ipv6.txt, ipv4.rsc, ipv6.rsc created")
+		log.Println("done: all files created in dist/")
 		return
 	}
 
