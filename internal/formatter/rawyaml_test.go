@@ -31,20 +31,24 @@ func TestRawYAMLFormatter(t *testing.T) {
 	if !strings.Contains(content, `- "2001:db8::/32"`) {
 		t.Error("missing IPv6")
 	}
+	if !strings.Contains(content, "# last fetch:") {
+		t.Error("missing timestamp header")
+	}
 
 	lines := strings.Split(strings.TrimSpace(content), "\n")
-	if len(lines) != 3 {
-		t.Errorf("expected 3 lines, got %d", len(lines))
+	if len(lines) != 4 {
+		t.Errorf("expected 4 lines (header+3 entries), got %d", len(lines))
 	}
 }
 
 func TestRawYAMLFormatterEmpty(t *testing.T) {
 	f := RawYAMLFormatter{}
-	files, err := f.Format(nil, nil, "")
+	files, err := f.Format(nil, nil, "ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(files[0].Content) != 0 {
-		t.Error("empty input should produce empty content")
+	content := string(files[0].Content)
+	if !strings.Contains(content, "# last fetch: ts") {
+		t.Error("missing timestamp header")
 	}
 }

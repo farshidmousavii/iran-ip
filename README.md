@@ -217,7 +217,7 @@ ssh root@192.168.1.1 "sh /etc/iran-ip-ranges.sh"
 ## نصب
 
 ```bash
-git clone https://github.com/farshidmousavii/iran-ip-ranges-ranges.git
+git clone https://github.com/farshidmousavii/iran-ip-ranges.git
 cd iran-ip-ranges
 
 go run ./cmd/
@@ -645,7 +645,7 @@ Features:
 ## Installation
 
 ```bash
-git clone https://github.com/farshidmousavii/iran-ip-ranges-ranges.git
+git clone https://github.com/farshidmousavii/iran-ip-ranges.git
 cd iran-ip-ranges
 
 go run ./cmd/

@@ -12,7 +12,7 @@ func (SingboxFormatter) Name() string { return "singbox" }
 func (SingboxFormatter) Format(v4, v6 []string, timestamp string) ([]File, error) {
 	var buf bytes.Buffer
 
-	all := append(v4, v6...)
+	all := append(append([]string{}, v4...), v6...)
 
 	buf.WriteString("{\n")
 	buf.WriteString("  \"version\": 2,\n")

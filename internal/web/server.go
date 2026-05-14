@@ -94,7 +94,7 @@ func (s *Server) refreshLoop() {
 
 	for range ticker.C {
 		log.Println("--- scheduled refresh ---")
-		if err := fetchAndWrite(s.dir); err != nil {
+		if err := FetchAndWrite(s.dir); err != nil {
 			s.mu.Lock()
 			s.lastFetch = time.Now()
 			s.lastError = err

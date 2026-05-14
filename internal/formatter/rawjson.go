@@ -12,7 +12,7 @@ func (RawJSONFormatter) Name() string { return "rawjson" }
 func (RawJSONFormatter) Format(v4, v6 []string, timestamp string) ([]File, error) {
 	var buf bytes.Buffer
 
-	all := append(v4, v6...)
+	all := append(append([]string{}, v4...), v6...)
 
 	buf.WriteString("[\n")
 	for i, s := range all {

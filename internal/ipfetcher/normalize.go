@@ -76,7 +76,7 @@ func NormalizeSubnets(subnets []string) []string {
 	return result
 }
 
-func removeSubnets(nets []*net.IPNet, isV4 bool) []*net.IPNet {
+func removeSubnets(nets []*net.IPNet) []*net.IPNet {
 	var result []*net.IPNet
 	for _, candidate := range nets {
 		if len(result) == 0 {
@@ -134,7 +134,7 @@ func mergeIPv4(subnets []string) []string {
 	})
 
 	before := len(nets)
-	nets = removeSubnets(nets, true)
+	nets = removeSubnets(nets)
 
 	adjMerged := 0
 	changed := true
@@ -192,7 +192,7 @@ func mergeIPv6(subnets []string) []string {
 	})
 
 	before := len(nets)
-	nets = removeSubnets(nets, false)
+	nets = removeSubnets(nets)
 
 	adjMerged := 0
 	changed := true
@@ -229,16 +229,16 @@ func canMergeV4(a, b *net.IPNet) bool {
 	ma, _ := a.Mask.Size()
 	mb, _ := b.Mask.Size()
 
-	if ma != mb {
+	if ma != mb || ma <= 0 {
 		return false
 	}
 
-	size := 1 << (32 - ma)
+	size := int64(1) << (32 - ma)
 
-	ai := binary.BigEndian.Uint32(a.IP.To4())
-	bi := binary.BigEndian.Uint32(b.IP.To4())
+	ai := int64(binary.BigEndian.Uint32(a.IP.To4()))
+	bi := int64(binary.BigEndian.Uint32(b.IP.To4()))
 
-	if bi-ai != uint32(size) {
+	if bi-ai != size {
 		return false
 	}
 

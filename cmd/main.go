@@ -10,7 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/farshidmousavii/iran-ip-ranges/internal/ipfetcher"
 	"github.com/farshidmousavii/iran-ip-ranges/internal/web"
 )
 
@@ -32,7 +31,7 @@ func main() {
 
 	if *fetchOnly {
 		log.Println("mode: fetch-only")
-		if err := fetchAndWrite(dir); err != nil {
+		if err := web.FetchAndWrite(dir); err != nil {
 			log.Fatalf("fetch failed: %v", err)
 		}
 		log.Println("done: all files created in dist/")
@@ -42,9 +41,9 @@ func main() {
 	log.Println("mode: fetch + serve")
 	log.Println("attempting initial IP fetch...")
 
-	srv := web.New(dir, *refresh, *addr)
+	initErr := web.FetchAndWrite(dir)
 
-	initErr := fetchAndWrite(dir)
+	srv := web.New(dir, *refresh, *addr)
 	srv.SetInitialFetch(initErr)
 	if initErr != nil {
 		log.Printf("initial fetch failed: %v", initErr)
@@ -72,14 +71,4 @@ func main() {
 	log.Println("server stopped")
 }
 
-func fetchAndWrite(dir string) error {
-	asn, ipList, ipv6List, err := ipfetcher.GetASN()
-	if err != nil {
-		return err
-	}
 
-	prefixes := ipfetcher.GetPrefixes(asn, 50)
-	subnets := ipfetcher.Merge(prefixes, append(ipList, ipv6List...))
-
-	return ipfetcher.WriteFiles(subnets, dir)
-}

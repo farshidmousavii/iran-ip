@@ -6,7 +6,9 @@ import (
 	"github.com/farshidmousavii/iran-ip-ranges/internal/ipfetcher"
 )
 
-func fetchAndWrite(dir string) error {
+// FetchAndWrite fetches Iran IP ranges from RIPE and writes all dist/ files.
+
+func FetchAndWrite(dir string) error {
 	log.Println("=== starting IP fetch cycle ===")
 
 	asn, ipList, ipv6List, err := ipfetcher.GetASN()
