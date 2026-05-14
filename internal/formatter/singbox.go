@@ -15,7 +15,7 @@ func (SingboxFormatter) Format(v4, v6 []string, timestamp string) ([]File, error
 	all := append(v4, v6...)
 
 	buf.WriteString("{\n")
-	buf.WriteString("  \"version\": 3,\n")
+	buf.WriteString("  \"version\": 2,\n")
 	buf.WriteString("  \"rules\": [\n")
 	buf.WriteString("    {\n")
 	buf.WriteString("      \"ip_cidr\": [\n")
@@ -34,6 +34,6 @@ func (SingboxFormatter) Format(v4, v6 []string, timestamp string) ([]File, error
 	buf.WriteString("}\n")
 
 	return []File{
-		{Path: "singbox/iran.json", Content: buf.Bytes()},
+		{Path: "sing-box/iran.json", Content: buf.Bytes()},
 	}, nil
 }

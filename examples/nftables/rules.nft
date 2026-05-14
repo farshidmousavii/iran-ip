@@ -1,0 +1,22 @@
+#!/usr/sbin/nft -f
+
+# Include Iran IP sets
+include "/etc/nftables/iran.nft"
+
+table inet filter {
+  chain forward {
+    type filter hook forward priority filter; policy accept;
+
+    # Bypass Iran traffic (don't route through VPN)
+    ip daddr @iran-v4 accept
+    ip6 daddr @iran-v6 accept
+  }
+
+  chain input {
+    type filter hook input priority filter; policy accept;
+
+    # Allow Iran traffic
+    ip saddr @iran-v4 accept
+    ip6 saddr @iran-v6 accept
+  }
+}

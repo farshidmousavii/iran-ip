@@ -21,8 +21,8 @@ func TestMikrotikFormatter(t *testing.T) {
 	}
 
 	v4f := files[0]
-	if v4f.Path != "mikrotik/ipv4.rsc" {
-		t.Errorf("expected mikrotik/ipv4.rsc, got %s", v4f.Path)
+	if v4f.Path != "routeros/ipv4.rsc" {
+		t.Errorf("expected routeros/ipv4.rsc, got %s", v4f.Path)
 	}
 	content := string(v4f.Content)
 	if !strings.Contains(content, "/ip firewall address-list remove") {
@@ -36,8 +36,8 @@ func TestMikrotikFormatter(t *testing.T) {
 	}
 
 	v6f := files[1]
-	if v6f.Path != "mikrotik/ipv6.rsc" {
-		t.Errorf("expected mikrotik/ipv6.rsc, got %s", v6f.Path)
+	if v6f.Path != "routeros/ipv6.rsc" {
+		t.Errorf("expected routeros/ipv6.rsc, got %s", v6f.Path)
 	}
 	content6 := string(v6f.Content)
 	if !strings.Contains(content6, "add list=IRANv6 address=2001:db8::/32") {

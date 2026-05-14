@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/farshidmousavii/iran-ip/internal/ipfetcher"
-	"github.com/farshidmousavii/iran-ip/internal/web"
+	"github.com/farshidmousavii/iran-ip-ranges/internal/ipfetcher"
+	"github.com/farshidmousavii/iran-ip-ranges/internal/web"
 )
 
 func main() {

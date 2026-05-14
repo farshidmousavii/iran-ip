@@ -1,0 +1,14 @@
+# Iran IP routing for Clash/Mihomo
+# Place in rules.d/iran.yaml or include in main config
+
+rule-providers:
+  iran:
+    type: http
+    behavior: ipcidr
+    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml"
+    path: ./ruleset/iran.yaml
+    interval: 86400
+
+rules:
+  - RULE-SET,iran,DIRECT
+  - MATCH,PROXY

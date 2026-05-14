@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/farshidmousavii/iran-ip/internal/formatter"
+	"github.com/farshidmousavii/iran-ip-ranges/internal/formatter"
 )
 
 func WriteFiles(subnets []string, dir string) error {
@@ -22,8 +22,15 @@ func WriteFiles(subnets []string, dir string) error {
 
 	_ = timestamp
 
+	distDir := filepath.Join(dir, "dist")
+
 	log.Println("generating dist/ files...")
-	if err := formatter.RunAll(v4Merged, v6Merged, filepath.Join(dir, "dist")); err != nil {
+	if err := formatter.RunAll(v4Merged, v6Merged, distDir); err != nil {
+		return err
+	}
+
+	log.Println("generating checksums.txt...")
+	if err := formatter.GenerateChecksums(distDir); err != nil {
 		return err
 	}
 

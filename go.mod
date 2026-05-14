@@ -1,3 +1,3 @@
-module github.com/farshidmousavii/iran-ip
+module github.com/farshidmousavii/iran-ip-ranges
 
 go 1.25

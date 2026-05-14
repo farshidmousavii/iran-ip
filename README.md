@@ -1,4 +1,4 @@
-# iran-ip — Iran IPv4/IPv6 Prefix Lists & Fetcher
+# iran-ip-ranges — Iran IPv4/IPv6 Prefix Lists & Fetcher
 
 **فارسی** | [English](#english)
 
@@ -36,27 +36,27 @@
 
 - **Plain text:** `dist/raw/ipv4.txt`, `dist/raw/ipv6.txt`
 - **Clash / Mihomo:** `dist/clash/iran.yaml`
-- **Sing-box:** `dist/singbox/iran.json`
+- **Sing-box:** `dist/sing-box/iran.json`
 - **Xray:** `dist/xray/iran.json`
-- **NFTables ipset:** `dist/nftables/iran.ipset`
-- **NFTables config:** `dist/nftables/iran.nft`
+- **NFTables ipset:** `dist/firewall/iran.ipset`
+- **NFTables config:** `dist/firewall/iran.nft`
 - **OpenWRT:** `dist/openwrt/iran.sh`
-- **MikroTik RouterOS:** `dist/mikrotik/ipv4.rsc`, `dist/mikrotik/ipv6.rsc`
+- **MikroTik RouterOS:** `dist/routeros/ipv4.rsc`, `dist/routeros/ipv6.rsc`
 
 ### لینک‌های دانلود مستقیم
 
 | فایل | لینک |
 |------|------|
-| `raw/ipv4.txt` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv4.txt) |
-| `raw/ipv6.txt` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv6.txt) |
-| `mikrotik/ipv4.rsc` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc) |
-| `mikrotik/ipv6.rsc` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv6.rsc) |
-| `clash/iran.yaml` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml) |
-| `singbox/iran.json` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json) |
-| `xray/iran.json` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/xray/iran.json) |
-| `nftables/iran.ipset` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.ipset) |
-| `nftables/iran.nft` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.nft) |
-| `openwrt/iran.sh` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/openwrt/iran.sh) |
+| `raw/ipv4.txt` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv4.txt) |
+| `raw/ipv6.txt` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv6.txt) |
+| `routeros/ipv4.rsc` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc) |
+| `routeros/ipv6.rsc` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc) |
+| `clash/iran.yaml` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml) |
+| `sing-box/iran.json` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json) |
+| `xray/iran.json` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/xray/iran.json) |
+| `firewall/iran.ipset` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset) |
+| `firewall/iran.nft` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft) |
+| `openwrt/iran.sh` | [Download](https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh) |
 
 ---
 
@@ -66,32 +66,32 @@
 
 ```bash
 # IPv4
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv4.txt
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv4.txt
 
 # IPv6
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv6.txt
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv6.txt
 
 # Clash / Mihomo
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml
 
 # Sing-box
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json
 
 # Xray
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/xray/iran.json
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/xray/iran.json
 
 # NFTables ipset
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.ipset
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset
 
 # NFTables config
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.nft
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft
 
 # OpenWRT script
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/openwrt/iran.sh
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh
 
 # MikroTik
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv6.rsc
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc
 ```
 
 ### استفاده در نرم‌افزارهای proxy
@@ -103,7 +103,7 @@ rule-providers:
   iran:
     type: http
     behavior: ipcidr
-    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml"
+    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml"
     path: ./iran.yaml
     interval: 86400
 
@@ -122,7 +122,7 @@ rules:
         "type": "remote",
         "tag": "iran",
         "format": "source",
-        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json"
+        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json"
       }
     ],
     "rules": [
@@ -164,7 +164,7 @@ ipset restore < iran.ipset
 **nftables:**
 
 ```nft
-include "/etc/nftables/iran.nft"
+include "/etc/firewall/iran.nft"
 
 chain prerouting {
   type filter hook prerouting priority 0;
@@ -177,14 +177,14 @@ chain prerouting {
 
 ```bash
 # کپی اسکریپت به روتر و اجرا
-scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip.sh
-ssh root@192.168.1.1 "sh /etc/iran-ip.sh"
+scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip-ranges.sh
+ssh root@192.168.1.1 "sh /etc/iran-ip-ranges.sh"
 ```
 
 ### استفاده در MikroTik
 
 ```rsc
-/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc" dst-path="ipv4.rsc"
+/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc" dst-path="ipv4.rsc"
 /import ipv4.rsc
 ```
 
@@ -217,8 +217,8 @@ ssh root@192.168.1.1 "sh /etc/iran-ip.sh"
 ## نصب
 
 ```bash
-git clone https://github.com/farshidmousavii/iran-ip.git
-cd iran-ip
+git clone https://github.com/farshidmousavii/iran-ip-ranges-ranges.git
+cd iran-ip-ranges
 
 go run ./cmd/
 ```
@@ -238,14 +238,14 @@ docker compose up -d
 ### Docker Manual
 
 ```bash
-docker build -t iran-ip .
+docker build -t iran-ip-ranges .
 
 docker run -d \
-  --name iran-ip \
+  --name iran-ip-ranges \
   -p 8080:8080 \
   -v $(pwd)/data:/app/data \
   -w /app/data \
-  iran-ip
+  iran-ip-ranges
 ```
 
 کانتینر با کاربر non-root اجرا می‌شود و دارای HEALTHCHECK داخلی است.
@@ -297,13 +297,13 @@ go run ./cmd/ -fetch-only
 | `GET /health`               | وضعیت سلامت سرویس               |
 | `GET /ipv4.txt`             | نمایش لیست IPv4                 |
 | `GET /ipv6.txt`             | نمایش لیست IPv6                 |
-| `GET /ipv4.rsc`             | دانلود اسکریپت MikroTik IPv4    |
-| `GET /ipv6.rsc`             | دانلود اسکریپت MikroTik IPv6    |
+| `GET /ipv4.rsc`             | دانلود اسکریپت RouterOS IPv4    |
+| `GET /ipv6.rsc`             | دانلود اسکریپت RouterOS IPv6    |
 | `GET /clash/iran.yaml`      | دانلود rule-provider Clash      |
-| `GET /singbox/iran.json`    | دانلود rule-set Sing-box        |
+| `GET /sing-box/iran.json`    | دانلود rule-set Sing-box        |
 | `GET /xray/iran.json`       | دانلود routing rules Xray       |
-| `GET /nftables/iran.ipset`  | دانلود اسکریپت ipset restore    |
-| `GET /nftables/iran.nft`    | دانلود کانفیگ nftables          |
+| `GET /firewall/iran.ipset`  | دانلود اسکریپت ipset restore    |
+| `GET /firewall/iran.nft`    | دانلود کانفیگ nftables          |
 | `GET /openwrt/iran.sh`      | دانلود اسکریپت OpenWRT          |
 
 تمام endpointها دارای:
@@ -371,7 +371,7 @@ HTTP Status:
 
 ```rsc
 :local fileName "IP.rsc"
-:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc"
+:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc"
 
 /tool fetch url=$url dst-path=$fileName mode=http
 
@@ -442,59 +442,49 @@ The project fetches announced IP prefixes for Iran from RIPE Stat, merges and no
 
 ## Direct Downloads
 
-### IPv4
-
-- `ipv4.txt`
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv4.txt`
-
-### IPv6
-
-- `ipv6.txt`
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv6.txt`
-
 ### Clash / Mihomo
 
 - `clash/iran.yaml`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml`
 
 ### Sing-box
 
-- `singbox/iran.json`
+- `sing-box/iran.json`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json`
 
 ### Xray
 
 - `xray/iran.json`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/xray/iran.json`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/xray/iran.json`
 
 ### NFTables
 
-- `nftables/iran.ipset`
+- `firewall/iran.ipset`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.ipset`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset`
 
-- `nftables/iran.nft`
+- `firewall/iran.nft`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.nft`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft`
 
 ### OpenWRT
 
 - `openwrt/iran.sh`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/openwrt/iran.sh`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh`
 
 ### MikroTik RouterOS
 
-- `mikrotik/ipv4.rsc`
+- `routeros/ipv4.rsc`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc`
 
-- `mikrotik/ipv6.rsc`
+- `routeros/ipv6.rsc`
 
-- `https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv6.rsc`
+- `https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc`
 
 ---
 
@@ -504,32 +494,32 @@ The project fetches announced IP prefixes for Iran from RIPE Stat, merges and no
 
 ```bash
 # IPv4
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv4.txt
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv4.txt
 
 # IPv6
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/raw/ipv6.txt
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/raw/ipv6.txt
 
 # Clash / Mihomo
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml
 
 # Sing-box
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json
 
 # Xray
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/xray/iran.json
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/xray/iran.json
 
 # NFTables ipset
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.ipset
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.ipset
 
 # NFTables config
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/nftables/iran.nft
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/firewall/iran.nft
 
 # OpenWRT script
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/openwrt/iran.sh
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/openwrt/iran.sh
 
 # MikroTik
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc
-curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv6.rsc
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc
+curl -O https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv6.rsc
 ```
 
 ### Proxy Software Usage
@@ -541,7 +531,7 @@ rule-providers:
   iran:
     type: http
     behavior: ipcidr
-    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/clash/iran.yaml"
+    url: "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/clash/iran.yaml"
     path: ./iran.yaml
     interval: 86400
 
@@ -560,7 +550,7 @@ rules:
         "type": "remote",
         "tag": "iran",
         "format": "source",
-        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/singbox/iran.json"
+        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json"
       }
     ],
     "rules": [
@@ -602,7 +592,7 @@ ipset restore < iran.ipset
 **nftables:**
 
 ```nft
-include "/etc/nftables/iran.nft"
+include "/etc/firewall/iran.nft"
 
 chain prerouting {
   type filter hook prerouting priority 0;
@@ -615,14 +605,14 @@ chain prerouting {
 
 ```bash
 # Copy script to router and run
-scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip.sh
-ssh root@192.168.1.1 "sh /etc/iran-ip.sh"
+scp openwrt/iran.sh root@192.168.1.1:/etc/iran-ip-ranges.sh
+ssh root@192.168.1.1 "sh /etc/iran-ip-ranges.sh"
 ```
 
 ### MikroTik Usage
 
 ```rsc
-/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc" dst-path="ipv4.rsc"
+/tool fetch url="https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc" dst-path="ipv4.rsc"
 /import ipv4.rsc
 ```
 
@@ -655,8 +645,8 @@ Features:
 ## Installation
 
 ```bash
-git clone https://github.com/farshidmousavii/iran-ip.git
-cd iran-ip
+git clone https://github.com/farshidmousavii/iran-ip-ranges-ranges.git
+cd iran-ip-ranges
 
 go run ./cmd/
 ```
@@ -676,14 +666,14 @@ Generated files will be available in the `data/` directory.
 ### Docker
 
 ```bash
-docker build -t iran-ip .
+docker build -t iran-ip-ranges .
 
 docker run -d \
-  --name iran-ip \
+  --name iran-ip-ranges \
   -p 8080:8080 \
   -v $(pwd)/data:/app/data \
   -w /app/data \
-  iran-ip
+  iran-ip-ranges
 ```
 
 Container runs as non-root user and includes a built-in health check.
@@ -735,13 +725,13 @@ go run ./cmd/ -fetch-only
 | `GET /health`               | Service health endpoint           |
 | `GET /ipv4.txt`             | View IPv4 list                    |
 | `GET /ipv6.txt`             | View IPv6 list                    |
-| `GET /ipv4.rsc`             | Download MikroTik IPv4 script     |
-| `GET /ipv6.rsc`             | Download MikroTik IPv6 script     |
+| `GET /ipv4.rsc`             | Download RouterOS IPv4 script     |
+| `GET /ipv6.rsc`             | Download RouterOS IPv6 script     |
 | `GET /clash/iran.yaml`      | Download Clash rule-provider      |
-| `GET /singbox/iran.json`    | Download Sing-box rule-set        |
+| `GET /sing-box/iran.json`    | Download Sing-box rule-set        |
 | `GET /xray/iran.json`       | Download Xray routing rules       |
-| `GET /nftables/iran.ipset`  | Download ipset restore script     |
-| `GET /nftables/iran.nft`    | Download nftables config          |
+| `GET /firewall/iran.ipset`  | Download ipset restore script     |
+| `GET /firewall/iran.nft`    | Download nftables config          |
 | `GET /openwrt/iran.sh`      | Download OpenWRT script           |
 
 All file endpoints include:
@@ -807,7 +797,7 @@ HTTP Status:
 
 ```rsc
 :local fileName "IP.rsc"
-:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip/main/dist/mikrotik/ipv4.rsc"
+:local url "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/routeros/ipv4.rsc"
 
 /tool fetch url=$url dst-path=$fileName mode=http
 

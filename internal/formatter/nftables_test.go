@@ -22,8 +22,8 @@ func TestNFTablesFormatter(t *testing.T) {
 
 	// ipset file
 	ipset := files[0]
-	if ipset.Path != "nftables/iran.ipset" {
-		t.Errorf("expected nftables/iran.ipset, got %s", ipset.Path)
+	if ipset.Path != "firewall/iran.ipset" {
+		t.Errorf("expected firewall/iran.ipset, got %s", ipset.Path)
 	}
 	ipsetContent := string(ipset.Content)
 	if !strings.Contains(ipsetContent, "create iran-v4 hash:net family inet") {
@@ -41,8 +41,8 @@ func TestNFTablesFormatter(t *testing.T) {
 
 	// nft file
 	nft := files[1]
-	if nft.Path != "nftables/iran.nft" {
-		t.Errorf("expected nftables/iran.nft, got %s", nft.Path)
+	if nft.Path != "firewall/iran.nft" {
+		t.Errorf("expected firewall/iran.nft, got %s", nft.Path)
 	}
 	nftContent := string(nft.Content)
 	if !strings.Contains(nftContent, "table inet iran_ip") {

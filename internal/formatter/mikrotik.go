@@ -14,8 +14,8 @@ func (MikrotikFormatter) Format(v4, v6 []string, timestamp string) ([]File, erro
 	v6Content := fmt.Sprintf("# last fetch: %s\n", timestamp) + mikrotikRsc(v6, "IRANv6")
 
 	return []File{
-		{Path: "mikrotik/ipv4.rsc", Content: []byte(v4Content)},
-		{Path: "mikrotik/ipv6.rsc", Content: []byte(v6Content)},
+		{Path: "routeros/ipv4.rsc", Content: []byte(v4Content)},
+		{Path: "routeros/ipv6.rsc", Content: []byte(v6Content)},
 	}, nil
 }
 

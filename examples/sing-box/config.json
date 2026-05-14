@@ -1,0 +1,23 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "route": {
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "iran",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/farshidmousavii/iran-ip-ranges/main/dist/sing-box/iran.json",
+        "download_detour": "direct"
+      }
+    ],
+    "rules": [
+      {
+        "rule_set": ["iran"],
+        "action": "route",
+        "outbound": "direct"
+      }
+    ]
+  }
+}

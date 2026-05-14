@@ -21,8 +21,8 @@ func TestSingboxFormatter(t *testing.T) {
 	}
 
 	f0 := files[0]
-	if f0.Path != "singbox/iran.json" {
-		t.Errorf("expected singbox/iran.json, got %s", f0.Path)
+	if f0.Path != "sing-box/iran.json" {
+		t.Errorf("expected sing-box/iran.json, got %s", f0.Path)
 	}
 
 	var result struct {
@@ -35,8 +35,8 @@ func TestSingboxFormatter(t *testing.T) {
 		t.Fatalf("invalid JSON: %v", err)
 	}
 
-	if result.Version != 3 {
-		t.Errorf("expected version 3, got %d", result.Version)
+	if result.Version != 2 {
+		t.Errorf("expected version 2, got %d", result.Version)
 	}
 	if len(result.Rules) != 1 {
 		t.Fatalf("expected 1 rule, got %d", len(result.Rules))

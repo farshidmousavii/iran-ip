@@ -1,0 +1,12 @@
+{
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:ir"],
+        "outboundTag": "direct"
+      }
+    ]
+  }
+}

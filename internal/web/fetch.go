@@ -3,7 +3,7 @@ package web
 import (
 	"log"
 
-	"github.com/farshidmousavii/iran-ip/internal/ipfetcher"
+	"github.com/farshidmousavii/iran-ip-ranges/internal/ipfetcher"
 )
 
 func fetchAndWrite(dir string) error {

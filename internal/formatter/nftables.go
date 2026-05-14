@@ -14,8 +14,8 @@ func (f NFTablesFormatter) Format(v4, v6 []string, timestamp string) ([]File, er
 	nftContent := f.buildNFT(v4, v6, timestamp)
 
 	return []File{
-		{Path: "nftables/iran.ipset", Content: ipsetContent},
-		{Path: "nftables/iran.nft", Content: nftContent},
+		{Path: "firewall/iran.ipset", Content: ipsetContent},
+		{Path: "firewall/iran.nft", Content: nftContent},
 	}, nil
 }
 

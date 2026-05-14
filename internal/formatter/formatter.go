@@ -32,6 +32,8 @@ func RunAll(v4, v6 []string, distDir string) error {
 		XrayFormatter{},
 		NFTablesFormatter{},
 		OpenWRTFormatter{},
+		RawJSONFormatter{},
+		RawYAMLFormatter{},
 	}
 
 	for _, f := range formatters {
