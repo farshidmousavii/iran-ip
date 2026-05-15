@@ -1,4 +1,4 @@
-# last fetch: 2026-05-15 07:27:01 +0330
+# last fetch: 2026-05-15 12:26:16 +0330
 # Iran IPv4 subnets
 create iran-v4 hash:net family inet hashsize 1024 maxelem 65536
 flush iran-v4
