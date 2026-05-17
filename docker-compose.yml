@@ -5,7 +5,4 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
-    volumes:
-      - ./data:/app/data
-    working_dir: /app/data
     command: ["-addr", ":8080"]

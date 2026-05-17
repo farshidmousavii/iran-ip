@@ -166,7 +166,7 @@ func (s *Server) serveFile(name, contentType string, download bool) http.Handler
 		w.Header().Set("Content-Type", contentType)
 		w.Header().Set("Cache-Control", "public, max-age=21600")
 		if download {
-			w.Header().Set("Content-Disposition", "attachment; filename=\""+name+"\"")
+			w.Header().Set("Content-Disposition", "attachment; filename=\""+filepath.Base(name)+"\"")
 		}
 		w.Header().Set("Last-Modified", info.ModTime().Format(time.RFC1123))
 

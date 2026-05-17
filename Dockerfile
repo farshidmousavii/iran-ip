@@ -14,7 +14,6 @@ WORKDIR /app
 COPY --from=builder /app/iran-ip .
 
 RUN adduser -D -u 1000 appuser && \
-    mkdir -p /app/data && \
     chown -R appuser:appuser /app
 
 USER appuser

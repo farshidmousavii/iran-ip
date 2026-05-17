@@ -148,7 +148,7 @@ go run ./cmd/
 docker compose up -d
 ```
 
-فایل‌های تولید شده در پوشه `data/` در دسترس خواهند بود.
+فایل‌های تولید شده در پوشه `dist/` در دسترس خواهند بود.
 
 ### Docker Manual
 
@@ -158,8 +158,6 @@ docker build -t iran-ip-ranges .
 docker run -d \
   --name iran-ip-ranges \
   -p 8080:8080 \
-  -v $(pwd)/data:/app/data \
-  -w /app/data \
   iran-ip-ranges
 ```
 
@@ -210,16 +208,21 @@ go run ./cmd/ -fetch-only
 | Endpoint                    | Description                     |
 | --------------------------- | ------------------------------- |
 | `GET /health`               | وضعیت سلامت سرویس               |
-| `GET /ipv4.txt`             | نمایش لیست IPv4                 |
-| `GET /ipv6.txt`             | نمایش لیست IPv6                 |
-| `GET /ipv4.rsc`             | دانلود اسکریپت RouterOS IPv4    |
-| `GET /ipv6.rsc`             | دانلود اسکریپت RouterOS IPv6    |
+| `GET /ipv4.txt`             | نمایش لیست IPv4 (backward)      |
+| `GET /ipv6.txt`             | نمایش لیست IPv6 (backward)      |
+| `GET /ipv4.rsc`             | دانلود RouterOS IPv4 (backward) |
+| `GET /ipv6.rsc`             | دانلود RouterOS IPv6 (backward) |
+| `GET /routeros/ipv4.rsc`    | دانلود اسکریپت RouterOS IPv4    |
+| `GET /routeros/ipv6.rsc`    | دانلود اسکریپت RouterOS IPv6    |
 | `GET /clash/iran.yaml`      | دانلود rule-provider Clash      |
-| `GET /sing-box/iran.json`    | دانلود rule-set Sing-box        |
+| `GET /sing-box/iran.json`   | دانلود rule-set Sing-box        |
 | `GET /xray/iran.json`       | دانلود routing rules Xray       |
 | `GET /firewall/iran.ipset`  | دانلود اسکریپت ipset restore    |
 | `GET /firewall/iran.nft`    | دانلود کانفیگ nftables          |
 | `GET /openwrt/iran.sh`      | دانلود اسکریپت OpenWRT          |
+| `GET /raw/iran.json`        | دانلود JSON خام                 |
+| `GET /raw/iran.yaml`        | دانلود YAML خام                 |
+| `GET /checksums.txt`        | دانلود SHA256 checksums         |
 
 تمام endpointها دارای:
 
@@ -442,7 +445,7 @@ go run ./cmd/
 docker compose up -d
 ```
 
-Generated files will be available in the `data/` directory.
+Generated files will be available in the `dist/` directory.
 
 ### Docker
 
@@ -452,8 +455,6 @@ docker build -t iran-ip-ranges .
 docker run -d \
   --name iran-ip-ranges \
   -p 8080:8080 \
-  -v $(pwd)/data:/app/data \
-  -w /app/data \
   iran-ip-ranges
 ```
 
@@ -504,16 +505,21 @@ go run ./cmd/ -fetch-only
 | Endpoint                    | Description                       |
 | --------------------------- | --------------------------------- |
 | `GET /health`               | Service health endpoint           |
-| `GET /ipv4.txt`             | View IPv4 list                    |
-| `GET /ipv6.txt`             | View IPv6 list                    |
-| `GET /ipv4.rsc`             | Download RouterOS IPv4 script     |
-| `GET /ipv6.rsc`             | Download RouterOS IPv6 script     |
+| `GET /ipv4.txt`             | View IPv4 list (backward compat)  |
+| `GET /ipv6.txt`             | View IPv6 list (backward compat)  |
+| `GET /ipv4.rsc`             | Download RouterOS (backward)      |
+| `GET /ipv6.rsc`             | Download RouterOS (backward)      |
+| `GET /routeros/ipv4.rsc`    | Download RouterOS IPv4 script     |
+| `GET /routeros/ipv6.rsc`    | Download RouterOS IPv6 script     |
 | `GET /clash/iran.yaml`      | Download Clash rule-provider      |
-| `GET /sing-box/iran.json`    | Download Sing-box rule-set        |
+| `GET /sing-box/iran.json`   | Download Sing-box rule-set        |
 | `GET /xray/iran.json`       | Download Xray routing rules       |
 | `GET /firewall/iran.ipset`  | Download ipset restore script     |
 | `GET /firewall/iran.nft`    | Download nftables config          |
 | `GET /openwrt/iran.sh`      | Download OpenWRT script           |
+| `GET /raw/iran.json`        | Download raw JSON list            |
+| `GET /raw/iran.yaml`        | Download raw YAML list            |
+| `GET /checksums.txt`        | Download SHA256 checksums         |
 
 All file endpoints include:
 
